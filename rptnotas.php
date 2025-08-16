@@ -82,64 +82,73 @@
 </div>
 <!--FIN DEL SLIDER DEL BANNER-->
 
-<!-- INICIO DEL CONTENIDO DE LA PAGINA-->
-
+<!-- INICIO DEL CONTENIDO DE LA PAGINA-->   
 <!-- Inicio de los Reportes -->
  <section class="container">
   <div class="row">
 		<div class="col-md-12 col-md-offset-0 text-center">
-		<h2>SESIÓN DE LOS REPORTES </h2>
+		<h3>LISTADO GENERAL DE LAS NOTAS </h3>
 		<hr>
  	  </div>	
 	</div>  
 </section>
-	
-<section class="container" align="center">
-	<div class="row" >
-		<div class="col-md-3" col-md-offset-2 align="center">
-			<div class="img-rounded">
-			  <img src="img/reporte1.png" alt="">
-				<h4>Listado de Alumnos</h4>
-				<a class="btn btn-danger"  href="rptalumnos.php">Ver...</a>
-				
-	  		</div>	
-		</div>
-	
-	
-	<div class="col-md-3" col-md-offset-2 align="center">
-			<div class="img-rounded">
-			  <img src="img/reporte1.jpg" alt="">
-				<h4>Listado de Asignaturas</h4>
-				<a class="btn btn-danger"  href="rptasignaturas.php">Ver...</a>
-				
-	  		</div>	
-	  </div>
-		
-		
-		<div class="col-md-3" col-md-offset-2 align="center">
-			<div class="img-rounded">
-			  <img src="img/reporte2.png" alt="">
-				<h4>Listado de Asignaciones</h4>
-				<a class="btn btn-danger"  href="rptasignaciones.php">Ver...</a>
-				
-	  		</div>	
-		</div>
-		
-		
-		<div class="col-md-3" col-md-offset-2 align="center">
-			<div class="img-rounded">
-			  <img src="img/reporte4.jpg" alt="">
-				<h4>Listado de Notas</h4>
-				<a class="btn btn-danger"  href="rptnotas.php">Ver...</a>
-				
-	  		</div>	
-		</div>
-	</div>  
-</section>	
 
-<!-- /Fin de los Reportes -->	 
+<!-- INICIO DEL CONTENIDO DE LA TABLA--> 	
+<div class="container">
+    <table class="table table-striped">
+      <thead> 
+        <tr> 
+		  <th>No</th>
+          <th>No. Carnet</th> 
+          <th>Nombre completo</th>
+          <th>Carrera</th>
+          <th>Asignatura</th>
+          <th>Turno</th>
+          <th>Acumulado</th>
+          <th>Examen Final</th>
+          <th>Nota. Final</th>
+        </tr> 
+      </thead>
+      <tbody>
+        <tr> 
+          <?php
+			//Conexion con la base
+			$conn = mysqli_connect("127.0.0.1","root","","bd_nota");
 
-<!-- FIN DEL CONTENIDO DE LA PAGINA-->
+			//Verificamos si la conexion fue exitosa
+      if (!$conn) { 
+        die("Connection failed: " . mysqli_connect_error());
+      }
+
+			//Creamos el query para mandar a mostrar los datos dinamicamente
+			$query_Datos = "SELECT * FROM notas where(Anulado='N') ORDER BY Id";
+
+			//Ejecutamos el query creado anteriormente
+			$query_res = mysqli_query($conn, $query_Datos);
+
+					//Creamos la condicion para mandara a imprimir los datos dinamicamente
+					while ($mydatos = mysqli_fetch_assoc($query_res))
+					{
+					?>
+							<tr>
+							<td><?php echo $mydatos['Id'];?></td>
+							<td><?php echo $mydatos['No_Carnet'];?></td>
+							<td><?php echo $mydatos['Nombre_Completo'];?></td>
+							<td><?php echo $mydatos['Carrera'];?></td>
+							<td><?php echo $mydatos['Asignatura'];?></td>
+							<td><?php echo $mydatos['Turno'];?></td>
+						<td><?php echo $mydatos['Acumulado'];?></td>
+						<td><?php echo $mydatos['Exa_Final'];?></td>
+						<td><?php echo $mydatos['Nota_Final'];?></td>
+					<?php
+					}
+		  ?>
+        </tr>
+      </tbody>
+    </table>
+ </div> 	  
+<!-- Fin de los Reportes -->	
+<!-- FIN DEL CONTENIDO DE LA PAGINA -->
 
 <!--INICIO PIE DE PÁGINA-->
 <footer>
